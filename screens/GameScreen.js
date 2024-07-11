@@ -1,21 +1,99 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, TextInput, Button, View, StyleSheet, Alert } from 'react-native';
+import Back from '../components/Back';
+import Card from '../components/Card';
 
-const GameScreen = () => {
-    return (
-        <View style={styles.container}>
-            <Text>Game Screen</Text>
+const GameScreen = ({ setCurrentScreen }) => {
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
+  const [guess, setGuess] = useState('');
+  const [attempts, setAttempts] = useState(4);
+  const [timer, setTimer] = useState(9999999);
+  const [hintUsed, setHintUsed] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer(prevTimer => prevTimer - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0 || attempts === 0) {
+      Alert.alert("Time's up!", 'You ran out of time or attempts.');
+      setCurrentScreen('Start');
+    }
+  }, [timer, attempts]);
+
+  const handleGuessSubmission = () => {
+    const numGuess = parseInt(guess);
+    if (isNaN(numGuess)) {
+      Alert.alert('Invalid Input', 'Please enter a valid number.');
+      return;
+    }
+
+    if (numGuess !== randomNumber) {
+      setAttempts(prev => prev - 1);
+      Alert.alert('Try Again', `Wrong guess! You have ${attempts - 1} attempts left.`);
+    } else {
+      Alert.alert('Congratulations!', 'You guessed the number correctly!');
+      setCurrentScreen('Start');
+    }
+  };
+
+  const handleUseHint = () => {
+    if (!hintUsed) {
+      Alert.alert('Hint', `The number is ${randomNumber > 50 ? 'greater' : 'less'} than 50.`);
+      setHintUsed(true);
+    } else {
+      Alert.alert('Hint Used', 'You have already used your hint.');
+    }
+  };
+
+  const handleRestart = () => {
+    setCurrentScreen('Start');
+  };
+
+  return (
+    <Back>
+        <View style={styles.restartButtonContainer}>
+            <Button title="Restart" onPress={handleRestart} color="#007AFF" />
         </View>
-    );
+        <Card>
+            <Text style={styles.guessPrompt}>Guess A Number Between 1 & 100</Text>
+            <TextInput
+            style={styles.input}
+            value={guess}
+            onChangeText={setGuess}
+            keyboardType="numeric"
+            />
+            <Text style = {{ color: 'darkslategray'}}>Attempts left: {attempts}</Text>
+            <Text style = {{ color: 'darkslategray'}}>Timer: {timer} seconds</Text>
+            <Button title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
+            <Button title="Submit guess" onPress={handleGuessSubmission} />
+            <Button title="Restart" onPress={handleRestart} />
+        </Card>
+    </Back>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white', // You can adjust the background color as needed
-    }
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
+        padding: 10,
+        width: '20%',
+        borderBottomColor: 'blue', 
+        borderBottomWidth: 1, 
+    },
+    guessPrompt: {
+        fontSize: 18,     
+        color: 'blue',    
+        marginBottom: 10, 
+        textAlign: 'center',
+  },
 });
 
 export default GameScreen;
