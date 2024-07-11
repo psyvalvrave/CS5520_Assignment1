@@ -17,8 +17,8 @@ const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
             <Text style={styles.confirmText}>Here is the email that you enter: {email}</Text>
             <Text style={styles.confirmText}>If it is not correct, please go back and enter again.</Text>
             <View style={styles.buttonContainer}>
-              <Button title="Back to Edit" onPress={onHide} color="#007AFF" />
-              <Button title="Confirm and Continue" onPress={onConfirm} color="#4CAF50" />
+              <Button title="Go Back" onPress={onHide} color="#007AFF" />
+              <Button title="Continue" onPress={onConfirm} color="#4CAF50" />
             </View>
           </Card>
         </View>
