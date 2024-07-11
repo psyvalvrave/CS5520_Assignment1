@@ -6,7 +6,6 @@ import Card from '../components/Card';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
 import CustomTextLabel from '../components/CustomTextLabel';
-import CustomTextGeneral from '../components/CustomTextGeneral';
 import CustomTextError from '../components/CustomTextError';
 import ConfirmScreen from './ConfirmScreen';
 import colors from '../config/Color';
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     margin:20,
   },
   checkboxContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row',  
     alignItems: 'center',
     marginBottom: 10,
   },

@@ -13,8 +13,10 @@ const GameScreen = ({ setCurrentScreen }) => {
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
-    const [timer, setTimer] = useState(9999999);
+    const [timer, setTimer] = useState(60);
     const [hintUsed, setHintUsed] = useState(false);
+    const [gameState, setGameState] = useState('playing');
+    const [gamePlaying, setGamePlaying] = useState(true);
 
     useEffect(() => {
     const interval = setInterval(() => {
@@ -27,7 +29,7 @@ const GameScreen = ({ setCurrentScreen }) => {
     useEffect(() => {
     if (timer === 0 || attempts === 0) {
         Alert.alert("Time's up!", 'You ran out of time or attempts.');
-        setCurrentScreen('Start');
+        setCurrentScreen('gameOver');
     }
     }, [timer, attempts]);
 
@@ -39,8 +41,14 @@ const GameScreen = ({ setCurrentScreen }) => {
     }
 
     if (numGuess !== randomNumber) {
-        setAttempts(prev => prev - 1);
-        Alert.alert('Try Again', `Wrong guess! You have ${attempts - 1} attempts left.`);
+        const newAttempts = attempts - 1;
+        setAttempts(newAttempts);
+        setGuess(''); 
+        if (newAttempts > 0) {
+            setGamePlaying(false);
+        } else {
+            setGameState('gameOver');
+        }
     } else {
         Alert.alert('Congratulations!', 'You guessed the number correctly!');
         setCurrentScreen('Start');
@@ -60,25 +68,57 @@ const GameScreen = ({ setCurrentScreen }) => {
     setCurrentScreen('Start');
     };
 
+    const renderGameContent = () => {
+        if (gameState === 'playing') {
+            return (
+                <Card style={styles.card}>
+                    {gamePlaying && (
+                    <View>
+                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100 test answer is:{randomNumber}</CustomTextLabel>
+                        <CustomInput
+                            style={styles.input} 
+                            value={guess}
+                            onChangeText={setGuess}
+                            keyboardType="numeric"
+                        />
+                        <CustomTextGeneral>Attempts left: {attempts}</CustomTextGeneral>
+                        <CustomTextGeneral>Timer: {timer} seconds</CustomTextGeneral>
+                        <View>
+                            <CustomButton title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
+                            <CustomButton title="Submit guess" onPress={handleGuessSubmission} />
+                        </View>
+                    </View>
+                    )}
+                    {!gamePlaying && (
+                    <View>
+                        <CustomTextLabel>You did not guess correct!</CustomTextLabel>
+                        <View>
+                            <CustomButton title="Guess again" onPress={() => {setGamePlaying(true);  setTimer(60)}} />
+                            <CustomButton title="End the game" onPress={() => setGameState('gameOver')} />
+                        </View>
+                    </View>
+                    )}
+                </Card>
+            );
+        } else if (gameState === 'gameOver') {
+            return (
+                <Card style={styles.card}>
+                    <CustomTextError>Game Over</CustomTextError>
+                    <CustomButton title="Try Again" onPress={() => setGameState('playing')} />
+                    <CustomButton title="Exit" onPress={() => setCurrentScreen('Start')} />
+                </Card>
+            );
+        }
+    };
+    
+
     return (
-    <Back>
-        <View style={styles.restartButtonContainer}>
-            <CustomButton title="Restart" onPress={handleRestart} color={colors.button.restart} />
-        </View>
-        <Card style={styles.card}>
-            <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100</CustomTextLabel>
-            <CustomInput
-            style={styles.input} 
-            value={guess}
-            onChangeText={setGuess}
-            keyboardType="numeric"
-            />
-            <CustomTextGeneral>Attempts left: {attempts}</CustomTextGeneral>
-            <CustomTextGeneral>Timer: {timer} seconds</CustomTextGeneral>
-            <CustomButton title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
-            <CustomButton title="Submit guess" onPress={handleGuessSubmission} />
-        </Card>
-    </Back>
+        <Back>
+            <View style={styles.restartButtonContainer}>
+                <CustomButton title="Restart" onPress={handleRestart} color={colors.button.restart} />
+            </View>
+            {renderGameContent()}
+        </Back>
     );
 };
 
@@ -90,7 +130,7 @@ const styles = StyleSheet.create({
         zIndex: 1, // Make sure the button is clickable over other elements
         },
     input: {
-        width: '20%',
+        alignSelf: 'center',
     },
     guessPrompt: {
         marginBottom: 10, 

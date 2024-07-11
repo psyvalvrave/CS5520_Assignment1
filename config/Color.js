@@ -1,6 +1,6 @@
 const colors = {
     primary: '#4CAF50',
-    secondary: '#007AFF',     
+    secondary: '#007AFF',      
     background: 'navy', 
     card: 'gray',   
     text: {
@@ -9,7 +9,7 @@ const colors = {
         error: 'red',
     },
     input: {
-        border: 'gray',
+        border: 'blue',
         text: 'black',
     },
     button: {
