@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import StartScreen from './screens/StartScreen';
-import ConfirmScreen from './screens/ConfirmScreen';
 import GameScreen from './screens/GameScreen';
 
 const App = () => {
@@ -9,8 +8,6 @@ const App = () => {
 
   const renderScreen = () => {
     switch (currentScreen) {
-      case 'Confirm':
-        return <ConfirmScreen setCurrentScreen={setCurrentScreen} />;
       case 'Game':
         return <GameScreen setCurrentScreen={setCurrentScreen} />;
       case 'Start':
