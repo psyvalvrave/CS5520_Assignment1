@@ -7,6 +7,7 @@ import CustomInput from '../components/CustomInput';
 import CustomTextLabel from '../components/CustomTextLabel';
 import CustomTextGeneral from '../components/CustomTextGeneral';
 import CustomTextError from '../components/CustomTextError';
+import colors from '../config/Color';
 
 const GameScreen = ({ setCurrentScreen }) => {
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
@@ -62,20 +63,20 @@ const GameScreen = ({ setCurrentScreen }) => {
     return (
     <Back>
         <View style={styles.restartButtonContainer}>
-            <Button title="Restart" onPress={handleRestart} color="#007AFF" />
+            <CustomButton title="Restart" onPress={handleRestart} color={colors.button.restart} />
         </View>
         <Card style={styles.card}>
-            <Text style={styles.guessPrompt}>Guess A Number Between 1 & 100</Text>
-            <TextInput
+            <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100</CustomTextLabel>
+            <CustomInput
             style={styles.input} 
             value={guess}
             onChangeText={setGuess}
             keyboardType="numeric"
             />
-            <Text style = {{ color: 'darkslategray'}}>Attempts left: {attempts}</Text>
-            <Text style = {{ color: 'darkslategray'}}>Timer: {timer} seconds</Text>
-            <Button title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
-            <Button title="Submit guess" onPress={handleGuessSubmission} />
+            <CustomTextGeneral>Attempts left: {attempts}</CustomTextGeneral>
+            <CustomTextGeneral>Timer: {timer} seconds</CustomTextGeneral>
+            <CustomButton title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
+            <CustomButton title="Submit guess" onPress={handleGuessSubmission} />
         </Card>
     </Back>
     );
@@ -89,18 +90,9 @@ const styles = StyleSheet.create({
         zIndex: 1, // Make sure the button is clickable over other elements
         },
     input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 10,
-        padding: 10,
         width: '20%',
-        borderBottomColor: 'blue', 
-        borderBottomWidth: 1, 
     },
     guessPrompt: {
-        fontSize: 18,     
-        color: 'blue',    
         marginBottom: 10, 
         textAlign: 'center',
     },

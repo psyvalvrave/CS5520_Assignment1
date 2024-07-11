@@ -12,11 +12,11 @@ const Card = ({ children, style  }) => {
 
 const styles = StyleSheet.create({
   card: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.3,
-    elevation: 8,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    shadowOpacity: 0.5,
+    elevation: 12,
     backgroundColor: colors.card,
     padding: 20,
     borderRadius: 10,

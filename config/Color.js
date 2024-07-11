@@ -1,6 +1,6 @@
 const colors = {
-    primary: '#007AFF',       
-    secondary: '#4CAF50',     
+    primary: '#4CAF50',
+    secondary: '#007AFF',     
     background: 'navy', 
     card: 'gray',   
     text: {
