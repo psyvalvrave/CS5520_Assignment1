@@ -1,6 +1,9 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet } from 'react-native';
 import Card from '../components/Card';
+import CustomButton from '../components/CustomButton';
+import CustomTextLabel from '../components/CustomTextLabel';
+import colors from '../config/Color';
 
 const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
   return (
@@ -13,12 +16,12 @@ const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
       <View style={styles.centeredView}>
         <View>
           <Card style={styles.card}>
-            <Text style={styles.confirmText}>Hello {name}</Text> 
-            <Text style={styles.confirmText}>Here is the email that you enter: {email}</Text>
-            <Text style={styles.confirmText}>If it is not correct, please go back and enter again.</Text>
+            <CustomTextLabel>Hello {name}</CustomTextLabel> 
+            <CustomTextLabel>Here is the email that you enter: {email}</CustomTextLabel>
+            <CustomTextLabel>If it is not correct, please go back and enter again.</CustomTextLabel>
             <View style={styles.buttonContainer}>
-              <Button title="Go Back" onPress={onHide} color="#007AFF" />
-              <Button title="Continue" onPress={onConfirm} color="#4CAF50" />
+              <CustomButton title="Go Back" onPress={onHide} color={colors.button.start} />
+              <CustomButton title="Continue" onPress={onConfirm} color={colors.button.hint} />
             </View>
           </Card>
         </View>
@@ -34,22 +37,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  confirmText: {
-    marginBottom: 15,
-    textAlign: 'left',
-    fontSize: 16,
-    color: "blue",
-    alignSelf: 'flex-start',
-  },
   card:{
     marginTop: 115,
-    width: '80%',  
+    width: '90%',  
     height: '50%',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+    justifyContent: 'space-evenly',
+    width: '90%',
     marginTop: 20,
   }
 });
