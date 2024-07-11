@@ -4,62 +4,62 @@ import Back from '../components/Back';
 import Card from '../components/Card';
 
 const GameScreen = ({ setCurrentScreen }) => {
-  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
-  const [guess, setGuess] = useState('');
-  const [attempts, setAttempts] = useState(4);
-  const [timer, setTimer] = useState(9999999);
-  const [hintUsed, setHintUsed] = useState(false);
+    const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
+    const [guess, setGuess] = useState('');
+    const [attempts, setAttempts] = useState(4);
+    const [timer, setTimer] = useState(9999999);
+    const [hintUsed, setHintUsed] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const interval = setInterval(() => {
-      setTimer(prevTimer => prevTimer - 1);
+        setTimer(prevTimer => prevTimer - 1);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+    }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     if (timer === 0 || attempts === 0) {
-      Alert.alert("Time's up!", 'You ran out of time or attempts.');
-      setCurrentScreen('Start');
+        Alert.alert("Time's up!", 'You ran out of time or attempts.');
+        setCurrentScreen('Start');
     }
-  }, [timer, attempts]);
+    }, [timer, attempts]);
 
-  const handleGuessSubmission = () => {
+    const handleGuessSubmission = () => {
     const numGuess = parseInt(guess);
     if (isNaN(numGuess)) {
-      Alert.alert('Invalid Input', 'Please enter a valid number.');
-      return;
+        Alert.alert('Invalid Input', 'Please enter a valid number.');
+        return;
     }
 
     if (numGuess !== randomNumber) {
-      setAttempts(prev => prev - 1);
-      Alert.alert('Try Again', `Wrong guess! You have ${attempts - 1} attempts left.`);
+        setAttempts(prev => prev - 1);
+        Alert.alert('Try Again', `Wrong guess! You have ${attempts - 1} attempts left.`);
     } else {
-      Alert.alert('Congratulations!', 'You guessed the number correctly!');
-      setCurrentScreen('Start');
+        Alert.alert('Congratulations!', 'You guessed the number correctly!');
+        setCurrentScreen('Start');
     }
-  };
+    };
 
-  const handleUseHint = () => {
+    const handleUseHint = () => {
     if (!hintUsed) {
-      Alert.alert('Hint', `The number is ${randomNumber > 50 ? 'greater' : 'less'} than 50.`);
-      setHintUsed(true);
+        Alert.alert('Hint', `The number is ${randomNumber > 50 ? 'greater' : 'less'} than 50.`);
+        setHintUsed(true);
     } else {
-      Alert.alert('Hint Used', 'You have already used your hint.');
+        Alert.alert('Hint Used', 'You have already used your hint.');
     }
-  };
+    };
 
-  const handleRestart = () => {
+    const handleRestart = () => {
     setCurrentScreen('Start');
-  };
+    };
 
-  return (
+    return (
     <Back>
         <View style={styles.restartButtonContainer}>
             <Button title="Restart" onPress={handleRestart} color="#007AFF" />
         </View>
-        <Card>
+        <Card style={styles.card}>
             <Text style={styles.guessPrompt}>Guess A Number Between 1 & 100</Text>
             <TextInput
             style={styles.input}
@@ -71,13 +71,18 @@ const GameScreen = ({ setCurrentScreen }) => {
             <Text style = {{ color: 'darkslategray'}}>Timer: {timer} seconds</Text>
             <Button title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
             <Button title="Submit guess" onPress={handleGuessSubmission} />
-            <Button title="Restart" onPress={handleRestart} />
         </Card>
     </Back>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
+    restartButtonContainer: {
+        position: 'absolute',
+        right: 10,
+        top: 50, 
+        zIndex: 1, // Make sure the button is clickable over other elements
+        },
     input: {
         height: 40,
         borderColor: 'gray',
@@ -93,7 +98,12 @@ const styles = StyleSheet.create({
         color: 'blue',    
         marginBottom: 10, 
         textAlign: 'center',
-  },
+    },
+    card:{
+        marginTop: 115,
+        width: '80%',  
+        height: '50%',
+        },
 });
 
 export default GameScreen;
