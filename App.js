@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import StartScreen from './screens/StartScreen';
+import ConfirmScreen from './screens/ConfirmScreen';
+import GameScreen from './screens/GameScreen';
 
-export default function App() {
+const App = () => {
+  const [currentScreen, setCurrentScreen] = useState('Start');
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'Confirm':
+        return <ConfirmScreen setCurrentScreen={setCurrentScreen} />;
+      case 'Game':
+        return <GameScreen setCurrentScreen={setCurrentScreen} />;
+      case 'Start':
+      default:
+        return <StartScreen setCurrentScreen={setCurrentScreen} />;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      {renderScreen()}
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+export default App;
