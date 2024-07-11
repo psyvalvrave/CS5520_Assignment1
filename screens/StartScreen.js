@@ -3,6 +3,7 @@ import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Back from '../components/Back';
 import Card from '../components/Card';
+import ConfirmScreen from './ConfirmScreen';
 
 
 const StartScreen = ({ setCurrentScreen }) => {
@@ -10,6 +11,7 @@ const StartScreen = ({ setCurrentScreen }) => {
   const [email, setEmail] = useState('');
   const [checkboxSelected, setCheckboxSelected] = useState(false);
   const [errors, setErrors] = useState({ name: '', email: '' });
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
 
   const validateName = (name) => {
@@ -42,7 +44,7 @@ const StartScreen = ({ setCurrentScreen }) => {
     const nameError = validateName(name);
     const emailError = validateEmail(email);
     if (!nameError || !emailError  || checkboxSelected) {
-      setCurrentScreen('Confirm');
+      setConfirmVisible(true);
     }
     else{
       setErrors({ name: nameError, email: emailError });
@@ -92,6 +94,16 @@ const StartScreen = ({ setCurrentScreen }) => {
             <Button title="Start" onPress={handleStart} disabled={!checkboxSelected || errors.name || errors.email} color="#007AFF" />
         </View>
       </Card>
+      <ConfirmScreen
+        visible={confirmVisible}
+        name={name}
+        email={email}
+        onHide={() => setConfirmVisible(false)}
+        onConfirm={() => {
+          setConfirmVisible(false);
+          setCurrentScreen('Game'); 
+        }}
+      />
     </Back>
   );
 };

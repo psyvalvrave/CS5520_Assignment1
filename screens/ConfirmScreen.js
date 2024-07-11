@@ -1,22 +1,26 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet } from 'react-native';
+import Card from '../components/Card';
 
-const ConfirmScreen = ({ visible, name, email, onEdit, onConfirm }) => {
+const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={visible}
+      onRequestClose={onHide}
     >
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>Please confirm your details:</Text>
-          <Text style={styles.userData}>Name: {name}</Text>
-          <Text style={styles.userData}>Email: {email}</Text>
-          <View style={styles.buttonContainer}>
-            <Button title="Edit" onPress={onEdit} color="#2196F3" />
-            <Button title="Confirm" onPress={onConfirm} color="#F44336" />
-          </View>
+        <View>
+          <Card style={styles.card}>
+            <Text style={styles.confirmText}>Hello {name}</Text> 
+            <Text style={styles.confirmText}>Here is the email that you enter: {email}</Text>
+            <Text style={styles.confirmText}>If it is not correct, please go back and enter again.</Text>
+            <View style={styles.buttonContainer}>
+              <Button title="Back to Edit" onPress={onHide} color="#007AFF" />
+              <Button title="Confirm and Continue" onPress={onConfirm} color="#4CAF50" />
+            </View>
+          </Card>
         </View>
       </View>
     </Modal>
@@ -28,36 +32,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent gradient background
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  modalText: {
+  confirmText: {
     marginBottom: 15,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: 'left',
+    fontSize: 16,
+    color: "blue",
+    alignSelf: 'flex-start',
   },
-  userData: {
-    marginBottom: 10,
-    textAlign: 'center'
+  card:{
+    marginTop: 115,
+    width: '80%',  
+    height: '50%',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%'
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
   }
 });
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const Card = ({ children }) => {
+const Card = ({ children, style  }) => {
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, style]}>
       {children}
     </View>
   );
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     width: 300, 
     height: 500,
     alignItems: 'center',  
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
 });
 
