@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Text, TextInput, Button, View, StyleSheet, Alert } from 'react-native';
 import Back from '../components/Back';
 import Card from '../components/Card';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput';
+import CustomTextLabel from '../components/CustomTextLabel';
+import CustomTextGeneral from '../components/CustomTextGeneral';
+import CustomTextError from '../components/CustomTextError';
 
 const GameScreen = ({ setCurrentScreen }) => {
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
@@ -62,7 +67,7 @@ const GameScreen = ({ setCurrentScreen }) => {
         <Card style={styles.card}>
             <Text style={styles.guessPrompt}>Guess A Number Between 1 & 100</Text>
             <TextInput
-            style={styles.input}
+            style={styles.input} 
             value={guess}
             onChangeText={setGuess}
             keyboardType="numeric"

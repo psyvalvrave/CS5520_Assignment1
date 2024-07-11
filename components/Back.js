@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView  } from 'react-native';
+import colors from '../config/Color';
 
 const Back = ({ children, showWelcome }) => {
     return (
@@ -17,13 +18,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'navy',
+        backgroundColor: colors.background,
         width: '100%', 
         height: '100%', 
     },
     welcomeText: {
         fontSize: 24,
-        color: 'white',
+        color: colors.text.general,
         marginBottom: 30, 
         alignSelf: 'center',
     },

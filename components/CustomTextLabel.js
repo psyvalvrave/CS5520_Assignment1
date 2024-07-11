@@ -1,19 +1,21 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
+import colors from '../config/Color';
 
 const CustomTextLabel = ({ children, style }) => {
     return (
-        <Text style={[styles.text, style]}>
+        <Text style={[styles.label, style]}>
         {children}
         </Text>
     );
 };
 
 const styles = StyleSheet.create({
-    text: {
+    label: {
         fontSize: 16,
-        color: 'darkslategray',
-        marginBottom: 5,
+        color: colors.text.label,
+        marginLeft: 5,
+        alignSelf: 'flex-start',
     },
 });
 

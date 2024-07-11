@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
+import colors from '../config/Color';
 
 const CustomTextGeneral = ({ children, style }) => {
     return (
@@ -12,7 +13,7 @@ const CustomTextGeneral = ({ children, style }) => {
 const styles = StyleSheet.create({
     text: {
         fontSize: 16,
-        color: 'darkslategray',
+        color: colors.text.general,
         marginBottom: 5,
     },
 });

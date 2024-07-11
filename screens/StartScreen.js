@@ -3,7 +3,13 @@ import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Back from '../components/Back';
 import Card from '../components/Card';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput';
+import CustomTextLabel from '../components/CustomTextLabel';
+import CustomTextGeneral from '../components/CustomTextGeneral';
+import CustomTextError from '../components/CustomTextError';
 import ConfirmScreen from './ConfirmScreen';
+import colors from '../config/Color';
 
 
 const StartScreen = ({ setCurrentScreen }) => {
@@ -61,24 +67,22 @@ const StartScreen = ({ setCurrentScreen }) => {
   return (
     <Back showWelcome={true}>
       <Card>
-        <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
+        <CustomTextLabel>Name</CustomTextLabel>
+        <CustomInput
           onChangeText={setName}
           value={name}
           placeholder="Enter your name"
           onBlur={handleBlurName}
         />
-        {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
+        {errors.name ? <CustomTextError>{errors.name}</CustomTextError> : null}
+        <CustomTextLabel>Email</CustomTextLabel>
+        <CustomInput
           onChangeText={setEmail}
           value={email}
           placeholder="Enter your email"
           onBlur={handleBlurEmail}
         />
-        {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+        {errors.email ? <CustomTextError>{errors.email}</CustomTextError> : null}
 
         <View style={styles.checkboxContainer}>
           <Checkbox
@@ -87,11 +91,11 @@ const StartScreen = ({ setCurrentScreen }) => {
             onValueChange={setChecked => setCheckboxSelected(setChecked)}
             color={checkboxSelected ? '#4630EB' : undefined}
           />
-          <Text style={styles.checkLabel}>I am not a robot</Text>
+          <CustomTextLabel style={styles.checkLabel}>I am not a robot</CustomTextLabel>
         </View>
         <View style={styles.buttonContainer}>
-            <Button title="Reset" onPress={handleReset} color="#a61c3a" />
-            <Button title="Start" onPress={handleStart} disabled={!checkboxSelected || errors.name || errors.email} color="#007AFF" />
+            <CustomButton title="Reset" onPress={handleReset} color={colors.button.reset} />
+            <CustomButton title="Start" onPress={handleStart} disabled={!checkboxSelected || errors.name || errors.email} color={colors.button.start} />
         </View>
       </Card>
       <ConfirmScreen
@@ -109,28 +113,8 @@ const StartScreen = ({ setCurrentScreen }) => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderBottomColor: 'blue', 
-    borderBottomWidth: 1, 
-    marginBottom: 10,
-    padding: 10,
-    width: 250, 
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginBottom: 5,
-  },
-  label: {
-    fontSize: 16,
-    color: 'blue',
-    marginLeft: 5,
-    alignSelf: 'flex-start',
-  },
   checkLabel: {
-    fontSize: 16,
-    color: 'blue',
+    margin:20,
   },
   checkboxContainer: {
     flexDirection: 'row',

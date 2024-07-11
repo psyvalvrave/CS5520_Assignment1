@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
+import colors from '../config/Color';
 
-const CustomButton = ({ title, onPress, color = "#007AFF" }) => {
+const CustomButton = ({ title, onPress, disabled, color = "#007AFF" }) => {
     return (
         <View style={styles.buttonContainer}>
-        <Button title={title} onPress={onPress} color={color} />
+        <Button title={title} disabled={disabled} onPress={onPress} color={color} />
         </View>
     );
 };

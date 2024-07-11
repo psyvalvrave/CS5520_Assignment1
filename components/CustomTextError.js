@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
+import colors from '../config/Color';
 
 const CustomTextError = ({ children, style }) => {
     return (
@@ -11,8 +12,8 @@ const CustomTextError = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 16,
-        color: 'darkslategray',
+        color: colors.text.error,
+        fontSize: 12,
         marginBottom: 5,
     },
 });
