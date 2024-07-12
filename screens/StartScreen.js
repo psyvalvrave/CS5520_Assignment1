@@ -92,7 +92,7 @@ const StartScreen = ({ setCurrentScreen }) => {
             onValueChange={setChecked => setCheckboxSelected(setChecked)}
             color={checkboxSelected ? '#4630EB' : undefined}
           />
-          <CustomTextLabel style={styles.checkLabel}>I am not a robot</CustomTextLabel>
+          <CustomTextLabel style={styles.checkLabel}>I am not a robot </CustomTextLabel>
         </View>
         <View style={styles.buttonContainer}>
             <CustomButton title="Reset" onPress={handleReset} color={colors.button.reset} />

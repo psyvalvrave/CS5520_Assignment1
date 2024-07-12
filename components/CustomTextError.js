@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
         color: colors.text.error,
         fontSize: 12,
         marginBottom: 5,
+        padding: 5,
     },
 });
 

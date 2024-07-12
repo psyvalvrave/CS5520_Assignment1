@@ -12,9 +12,10 @@ const CustomTextLabel = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     label: {
-        fontSize: 16,
+        fontSize: 14,
         color: colors.text.label,
         marginLeft: 5,
+        padding: 5,
         alignSelf:'center',
     },
 });

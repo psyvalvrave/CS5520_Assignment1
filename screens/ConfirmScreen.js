@@ -17,9 +17,10 @@ const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
       <View style={styles.centeredView}>
         <View>
           <Card style={styles.card}>
-            <CustomTextLabel style={styles.label}>Hello {name}</CustomTextLabel> 
+            <CustomTextLabel style={styles.label}>Hello {name} </CustomTextLabel> 
             <CustomTextLabel style={styles.label}>Here is the email that you enter: {email}</CustomTextLabel>
-            <CustomTextLabel style={styles.label}>If it is not correct, please go back and enter again.</CustomTextLabel>
+            <CustomTextLabel></CustomTextLabel> 
+            <CustomTextLabel style={styles.label}>If it is not correct, please go back and enter again. </CustomTextLabel>
             <View style={styles.buttonContainer}>
               <CustomButton title="Go Back" onPress={onHide} color={colors.button.start} />
               <CustomButton title="Continue" onPress={onConfirm} color={colors.button.hint} />
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.transparent,
   },
   card:{
+    flex:0,
     marginTop: 115,
     width: '90%',  
     height: '50%',

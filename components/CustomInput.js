@@ -17,7 +17,7 @@ const CustomInput = ({ value, onChangeText, placeholder, onBlur, keyboardType, s
 
 const styles = StyleSheet.create({
     input: {
-        height: 40,
+        height: 45,
         borderBottomColor: colors.input.border, 
         borderBottomWidth: 1, 
         marginBottom: 10,

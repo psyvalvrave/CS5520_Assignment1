@@ -10,7 +10,7 @@ const Back = ({ children, showWelcome }) => {
             colors={[colors.primary, colors.secondary]} 
             start={{ x: 0, y: 0 }} 
             end={{ x: 1, y: 1 }}>
-            {showWelcome && <Text style={styles.welcomeText}>Welcome</Text>}
+            {showWelcome && <Text style={styles.welcomeText}> Welcome </Text>}
             <View style={styles.cardContainer}>
                 {children}
             </View>
@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.background,
         width: '100%', 
         height: '100%', 
     },
     welcomeText: {
         fontSize: 24,
         color: colors.text.general,
+        marginTop: 30,
         marginBottom: 15, 
         alignSelf: 'center',
     },

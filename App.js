@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, StatusBar  } from 'react-native';
 import StartScreen from './screens/StartScreen';
 import GameScreen from './screens/GameScreen';
 
@@ -20,6 +20,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content"/>
       {renderScreen()}
     </SafeAreaView>
   );

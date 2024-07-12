@@ -58,7 +58,7 @@ const GameScreen = ({ setCurrentScreen }) => {
                 setGameState('gameOver');
             }
         } else if (numGuess === randomNumber){
-            setTimer(-1);
+            setTimer(99999999999999); //avoiding move back to losing screen once the user wins 
             setGameState('gameWon');
         }
     };
@@ -85,25 +85,25 @@ const GameScreen = ({ setCurrentScreen }) => {
                 <Card style={styles.card}>
                     {gamePlaying && (
                     <View>
-                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100</CustomTextLabel>
+                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100 {randomNumber} </CustomTextLabel>
                         <CustomInput
                             style={styles.input} 
                             value={guess}
                             onChangeText={setGuess}
                             keyboardType="numeric"
                         />
-                        <CustomTextGeneral>Attempts left: {attempts}</CustomTextGeneral>
-                        <CustomTextGeneral>Timer: {timer} seconds</CustomTextGeneral>
+                        <CustomTextGeneral>Attempts left: {attempts} </CustomTextGeneral>
+                        <CustomTextGeneral>Timer: {timer} seconds </CustomTextGeneral>
                         <CustomTextLabel>{hint}</CustomTextLabel>
                         <View>
+                            <CustomButton title="Submit Guess" onPress={handleGuessSubmission} />
                             <CustomButton title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
-                            <CustomButton title="Submit guess" onPress={handleGuessSubmission} />
                         </View>
                     </View>
                     )}
                     {!gamePlaying && (
                     <View>
-                        <CustomTextLabel>You did not guess correct!</CustomTextLabel>
+                        <CustomTextLabel style={styles.label}>You did not guess correct! </CustomTextLabel>
                         <View>
                             <CustomButton title="Guess again" onPress={() => {setGamePlaying(true) /*;setTimer(60) Maybe reset timer make more sense?*/}} />
                             <CustomButton title="End the game" onPress={() => {setGameState('gameOver'); setGameOverReason('userEnded')}} />
@@ -131,21 +131,21 @@ const GameScreen = ({ setCurrentScreen }) => {
         
             return (
                 <Card style={styles.card}>
-                    <CustomTextLabel>The game is over</CustomTextLabel>
+                    <CustomTextLabel>The game is over </CustomTextLabel>
                     <View style={styles.imageHolder}>
                         <Image 
                             source={require('../assets/sad.png')} 
                             style={styles.imageStyle} 
                             resizeMode="contain" />
                     </View>
-                    <CustomTextLabel>{reasonText}</CustomTextLabel>
+                    <CustomTextLabel>{reasonText} </CustomTextLabel>
                 </Card>
             );
         } else if (gameState === 'gameWon') {
             return (
                 <Card style={styles.card}>
-                    <CustomTextLabel style={styles.label}>Congratulations! You guessed the number!</CustomTextLabel>
-                    <CustomTextGeneral>Attempts used: {5 - attempts}</CustomTextGeneral>
+                    <CustomTextLabel style={styles.label}>Congratulations! You guessed the number! </CustomTextLabel>
+                    <CustomTextGeneral>Attempts used: {5 - attempts} </CustomTextGeneral>
                     <View style={styles.imageHolder}>
                     <Image
                         resizeMode="contain"
@@ -169,10 +169,13 @@ const GameScreen = ({ setCurrentScreen }) => {
 
     return (
         <Back>
-            <View style={styles.restartButtonContainer}>
-                <CustomButton title="Restart" onPress={handleRestart} color={colors.button.restart} />
+            <View style={styles.flex}>
+                <View style={styles.restartButtonContainer}>
+                    <CustomButton title="Restart" onPress={handleRestart} color={colors.button.restart} />
+                </View>
+                <View style={styles.gap} />
+                {renderGameContent()}
             </View>
-            {renderGameContent()}
         </Back>
     );
 };
@@ -180,8 +183,8 @@ const GameScreen = ({ setCurrentScreen }) => {
 const styles = StyleSheet.create({
     restartButtonContainer: {
         position: 'absolute',
-        right: 10,
-        top: 50, 
+        right: 0,
+        top: 40,
         zIndex: 1, // Make sure the button is clickable over other elements
         },
     input: {
@@ -192,9 +195,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     card:{
-        marginTop: 115,
+        marginTop: 90,
         width: '80%',  
-        height: '50%',
+        height: '80%',
     },
     imageStyle:{
         width: '100%',  
@@ -210,6 +213,12 @@ const styles = StyleSheet.create({
     },
     label:{
         textAlign:'center',
+    },
+    gap:{
+        height: 20,
+    },
+    flex:{
+        flex:1,
     },
 });
 

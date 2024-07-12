@@ -12,6 +12,7 @@ const Card = ({ children, style  }) => {
 
 const styles = StyleSheet.create({
   card: {
+    flex:1,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 8,
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: 300, 
-    height: 500,
+    height: 300,
+    marginBottom: 50,
     alignItems: 'center',  
     justifyContent: 'space-evenly',
   },

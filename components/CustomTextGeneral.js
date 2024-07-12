@@ -12,9 +12,10 @@ const CustomTextGeneral = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 16,
+        fontSize: 14,
         color: colors.text.general,
         marginBottom: 5,
+        padding: 5,
         textAlign: 'center',
     },
 });
