@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: colors.text.label,
         marginLeft: 5,
-        alignSelf: 'flex-start',
+        alignSelf:'center',
     },
 });
 

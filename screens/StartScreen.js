@@ -66,7 +66,7 @@ const StartScreen = ({ setCurrentScreen }) => {
   return (
     <Back showWelcome={true}>
       <Card>
-        <CustomTextLabel>Name</CustomTextLabel>
+        <CustomTextLabel style={styles.label}>Name</CustomTextLabel>
         <CustomInput
           onChangeText={setName}
           value={name}
@@ -74,7 +74,7 @@ const StartScreen = ({ setCurrentScreen }) => {
           onBlur={handleBlurName}
         />
         {errors.name ? <CustomTextError>{errors.name}</CustomTextError> : null}
-        <CustomTextLabel>Email</CustomTextLabel>
+        <CustomTextLabel style={styles.label}>Email</CustomTextLabel>
         <CustomInput
           onChangeText={setEmail}
           value={email}
@@ -127,7 +127,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',   
     justifyContent: 'space-around', 
     width: '100%',
-  }
+  },
+  label:{
+    alignSelf:'flex-start',
+  },
 });
 
 export default StartScreen;

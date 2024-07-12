@@ -13,7 +13,7 @@ const GameScreen = ({ setCurrentScreen }) => {
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
-    const [timer, setTimer] = useState(60000);
+    const [timer, setTimer] = useState(60);
     const [hintUsed, setHintUsed] = useState(false);
     const [hint, setHint] = useState("")
     const [gameState, setGameState] = useState('playing');
@@ -54,9 +54,9 @@ const GameScreen = ({ setCurrentScreen }) => {
             } else {
                 setGameState('gameOver');
             }
-        } else {
-            Alert.alert('Congratulations!', 'You guessed the number correctly!');
-            setCurrentScreen('Start');
+        } else if (numGuess === randomNumber){
+            setTimer(-1);
+            setGameState('gameWon');
         }
     };
 
@@ -126,11 +126,36 @@ const GameScreen = ({ setCurrentScreen }) => {
         
             return (
                 <Card style={styles.card}>
-                    <CustomTextLabel style={styles.label}>The game is over</CustomTextLabel>
+                    <CustomTextLabel>The game is over</CustomTextLabel>
                     <View style={styles.imageHolder}>
-                        <Image source={require('../assets/sad.png')} style={styles.imageStyle} resizeMode="contain" />
+                        <Image 
+                            source={require('../assets/sad.png')} 
+                            style={styles.imageStyle} 
+                            resizeMode="contain" />
                     </View>
                     <CustomTextLabel>{reasonText}</CustomTextLabel>
+                </Card>
+            );
+        } else if (gameState === 'gameWon') {
+            return (
+                <Card style={styles.card}>
+                    <CustomTextLabel style={styles.label}>Congratulations! You guessed the number!</CustomTextLabel>
+                    <CustomTextGeneral>Attempts used: {5 - attempts}</CustomTextGeneral>
+                    <View style={styles.imageHolder}>
+                    <Image
+                        resizeMode="contain"
+                        style={styles.imageStyle}
+                        source={{ 
+                            uri: `https://picsum.photos/id/${randomNumber}/100/100` }}
+                    />
+                    </View>
+                    <CustomButton title="New Game" onPress={() => {
+                        setGameState('playing');
+                        setAttempts(4);
+                        setTimer(60);
+                        setRandomNumber(Math.floor(Math.random() * 100) + 1);
+                        setHintUsed(false);
+                    }} />
                 </Card>
             );
         }
@@ -166,9 +191,6 @@ const styles = StyleSheet.create({
         width: '80%',  
         height: '50%',
     },
-    label:{
-        alignSelf:'center',
-    },
     imageStyle:{
         width: '100%',  
         height: '100%',
@@ -180,7 +202,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.card, 
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    label:{
+        textAlign:'center',
+    },
 });
 
 export default GameScreen;

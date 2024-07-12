@@ -16,9 +16,9 @@ const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
       <View style={styles.centeredView}>
         <View>
           <Card style={styles.card}>
-            <CustomTextLabel>Hello {name}</CustomTextLabel> 
-            <CustomTextLabel>Here is the email that you enter: {email}</CustomTextLabel>
-            <CustomTextLabel>If it is not correct, please go back and enter again.</CustomTextLabel>
+            <CustomTextLabel style={styles.label}>Hello {name}</CustomTextLabel> 
+            <CustomTextLabel style={styles.label}>Here is the email that you enter: {email}</CustomTextLabel>
+            <CustomTextLabel style={styles.label}>If it is not correct, please go back and enter again.</CustomTextLabel>
             <View style={styles.buttonContainer}>
               <CustomButton title="Go Back" onPress={onHide} color={colors.button.start} />
               <CustomButton title="Continue" onPress={onConfirm} color={colors.button.hint} />
@@ -47,7 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     width: '90%',
     marginTop: 20,
-  }
+  },
+  label:{
+    alignSelf:'flex-start',
+  },
 });
 
 export default ConfirmScreen;
