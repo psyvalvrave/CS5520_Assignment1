@@ -18,7 +18,8 @@ const colors = {
         reset:"#a61c3a",
         hint: '#4CAF50',
         restart: '#a61c3a',
-    }
+    },
+    transparent: 'rgba(0, 0, 0, 0.4)',
   };
   
   export default colors;

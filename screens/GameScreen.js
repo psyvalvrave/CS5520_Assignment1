@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, Button, View, StyleSheet, Alert } from 'react-native';
+import { Image, View, StyleSheet, Alert } from 'react-native';
 import Back from '../components/Back';
 import Card from '../components/Card';
 import CustomButton from '../components/CustomButton';
@@ -13,7 +13,7 @@ const GameScreen = ({ setCurrentScreen }) => {
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
-    const [timer, setTimer] = useState(60);
+    const [timer, setTimer] = useState(60000);
     const [hintUsed, setHintUsed] = useState(false);
     const [hint, setHint] = useState("")
     const [gameState, setGameState] = useState('playing');
@@ -23,9 +23,9 @@ const GameScreen = ({ setCurrentScreen }) => {
     useEffect(() => {
     const interval = setInterval(() => {
         setTimer(prevTimer => prevTimer - 1);
-    }, 1000);
+        }, 1000);
 
-    return () => clearInterval(interval);
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -38,31 +38,26 @@ const GameScreen = ({ setCurrentScreen }) => {
         }
     }, [timer, attempts]);
 
-    const handleEndGame = () => {
-        setGameOverReason('userEnded');
-        setGameState('gameOver');
-    };
-
     const handleGuessSubmission = () => {
-    const numGuess = parseInt(guess);
-    if (isNaN(numGuess)) {
-        Alert.alert('Invalid Input', 'Please enter a valid number.');
-        return;
-    }
-
-    if (numGuess !== randomNumber) {
-        const newAttempts = attempts - 1;
-        setAttempts(newAttempts);
-        setGuess(''); 
-        if (newAttempts > 0) {
-            setGamePlaying(false);
-        } else {
-            setGameState('gameOver');
+        const numGuess = parseInt(guess);
+        if (isNaN(numGuess)) {
+            Alert.alert('Invalid Input', 'Please enter a valid number.');
+            return;
         }
-    } else {
-        Alert.alert('Congratulations!', 'You guessed the number correctly!');
-        setCurrentScreen('Start');
-    }
+
+        if (numGuess !== randomNumber) {
+            const newAttempts = attempts - 1;
+            setAttempts(newAttempts);
+            setGuess(''); 
+            if (newAttempts > 0) {
+                setGamePlaying(false);
+            } else {
+                setGameState('gameOver');
+            }
+        } else {
+            Alert.alert('Congratulations!', 'You guessed the number correctly!');
+            setCurrentScreen('Start');
+        }
     };
 
     const handleUseHint = () => {
@@ -106,16 +101,36 @@ const GameScreen = ({ setCurrentScreen }) => {
                         <CustomTextLabel>You did not guess correct!</CustomTextLabel>
                         <View>
                             <CustomButton title="Guess again" onPress={() => {setGamePlaying(true) /*;setTimer(60) Maybe reset timer make more sense?*/}} />
-                            <CustomButton title="End the game" onPress={() => setGameState('gameOver')} />
+                            <CustomButton title="End the game" onPress={() => {setGameState('gameOver'); setGameOverReason('userEnded')}} />
                         </View>
                     </View>
                     )}
                 </Card>
             );
         } else if (gameState === 'gameOver') {
+            let reasonText = '';
+            switch (gameOverReason) { 
+                case 'timeUp':
+                    reasonText = 'Time is up!';
+                    break;
+                case 'attemptsOver':
+                    reasonText = 'No attempts left!';
+                    break;
+                case 'userEnded':
+                    reasonText = '';
+                    break;
+                default:
+                    reasonText = '';
+                    break;
+            }
+        
             return (
                 <Card style={styles.card}>
-                    <CustomTextError>Game Over</CustomTextError>
+                    <CustomTextLabel style={styles.label}>The game is over</CustomTextLabel>
+                    <View style={styles.imageHolder}>
+                        <Image source={require('../assets/sad.png')} style={styles.imageStyle} resizeMode="contain" />
+                    </View>
+                    <CustomTextLabel>{reasonText}</CustomTextLabel>
                 </Card>
             );
         }
@@ -150,7 +165,22 @@ const styles = StyleSheet.create({
         marginTop: 115,
         width: '80%',  
         height: '50%',
-        },
+    },
+    label:{
+        alignSelf:'center',
+    },
+    imageStyle:{
+        width: '100%',  
+        height: '100%',
+        overflow: 'visible',
+    },
+    imageHolder:{
+        width: 150,
+        height: 150,
+        backgroundColor: colors.card, 
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });
 
 export default GameScreen;
