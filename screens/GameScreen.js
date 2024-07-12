@@ -85,7 +85,7 @@ const GameScreen = ({ setCurrentScreen }) => {
                 <Card style={styles.card}>
                     {gamePlaying && (
                     <View>
-                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100 {randomNumber} </CustomTextLabel>
+                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100 </CustomTextLabel>
                         <CustomInput
                             style={styles.input} 
                             value={guess}
