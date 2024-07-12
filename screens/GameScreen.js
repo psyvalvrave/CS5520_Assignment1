@@ -15,8 +15,10 @@ const GameScreen = ({ setCurrentScreen }) => {
     const [attempts, setAttempts] = useState(4);
     const [timer, setTimer] = useState(60);
     const [hintUsed, setHintUsed] = useState(false);
+    const [hint, setHint] = useState("")
     const [gameState, setGameState] = useState('playing');
     const [gamePlaying, setGamePlaying] = useState(true);
+    const [gameOverReason, setGameOverReason] = useState('');
 
     useEffect(() => {
     const interval = setInterval(() => {
@@ -27,11 +29,19 @@ const GameScreen = ({ setCurrentScreen }) => {
     }, []);
 
     useEffect(() => {
-    if (timer === 0 || attempts === 0) {
-        Alert.alert("Time's up!", 'You ran out of time or attempts.');
-        setCurrentScreen('gameOver');
-    }
+    if (timer === 0) {
+            setGameOverReason('timeUp');
+            setGameState('gameOver');
+        } else if (attempts === 0) {
+            setGameOverReason('attemptsOver');
+            setGameState('gameOver');
+        }
     }, [timer, attempts]);
+
+    const handleEndGame = () => {
+        setGameOverReason('userEnded');
+        setGameState('gameOver');
+    };
 
     const handleGuessSubmission = () => {
     const numGuess = parseInt(guess);
@@ -57,7 +67,8 @@ const GameScreen = ({ setCurrentScreen }) => {
 
     const handleUseHint = () => {
     if (!hintUsed) {
-        Alert.alert('Hint', `The number is ${randomNumber > 50 ? 'greater' : 'less'} than 50.`);
+        const hintMessage = `The number is ${randomNumber > 50 ? 'greater' : 'equal to or less'} than 50.`;
+        setHint(hintMessage);
         setHintUsed(true);
     } else {
         Alert.alert('Hint Used', 'You have already used your hint.');
@@ -83,6 +94,7 @@ const GameScreen = ({ setCurrentScreen }) => {
                         />
                         <CustomTextGeneral>Attempts left: {attempts}</CustomTextGeneral>
                         <CustomTextGeneral>Timer: {timer} seconds</CustomTextGeneral>
+                        <CustomTextLabel>{hint}</CustomTextLabel>
                         <View>
                             <CustomButton title="Use a hint" onPress={handleUseHint} disabled={hintUsed} />
                             <CustomButton title="Submit guess" onPress={handleGuessSubmission} />
@@ -93,7 +105,7 @@ const GameScreen = ({ setCurrentScreen }) => {
                     <View>
                         <CustomTextLabel>You did not guess correct!</CustomTextLabel>
                         <View>
-                            <CustomButton title="Guess again" onPress={() => {setGamePlaying(true);  setTimer(60)}} />
+                            <CustomButton title="Guess again" onPress={() => {setGamePlaying(true) /*;setTimer(60) Maybe reset timer make more sense?*/}} />
                             <CustomButton title="End the game" onPress={() => setGameState('gameOver')} />
                         </View>
                     </View>
@@ -104,8 +116,6 @@ const GameScreen = ({ setCurrentScreen }) => {
             return (
                 <Card style={styles.card}>
                     <CustomTextError>Game Over</CustomTextError>
-                    <CustomButton title="Try Again" onPress={() => setGameState('playing')} />
-                    <CustomButton title="Exit" onPress={() => setCurrentScreen('Start')} />
                 </Card>
             );
         }
