@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, StatusBar  } from 'react-native';
+import StartScreen from './screens/StartScreen';
+import GameScreen from './screens/GameScreen';
 
-export default function App() {
+const App = () => {
+  const [currentScreen, setCurrentScreen] = useState('Start');
+
+  const renderScreen = () => {
+    //conditional rendering for game screen part. The confirm screen is built with modal, so do not need to switching screen. 
+    switch (currentScreen) {
+      case 'Game':
+        return <GameScreen setCurrentScreen={setCurrentScreen} />;
+      case 'Start':
+        return <StartScreen setCurrentScreen={setCurrentScreen} />;
+      default:
+        return <StartScreen setCurrentScreen={setCurrentScreen} />;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content"/>
+      {renderScreen()}
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+export default App;
