@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton';
 import CustomTextLabel from '../components/CustomTextLabel';
 import colors from '../config/Color';
 
+//using the information passing by the parent startScreen to modify the confirm screen 
 const ConfirmScreen = ({ visible, name, email, onHide, onConfirm }) => {
   return (
     <Modal

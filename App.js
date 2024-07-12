@@ -7,10 +7,12 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState('Start');
 
   const renderScreen = () => {
+    //conditional rendering for game screen part. The confirm screen is built with modal, so do not need to switching screen. 
     switch (currentScreen) {
       case 'Game':
         return <GameScreen setCurrentScreen={setCurrentScreen} />;
       case 'Start':
+        return <StartScreen setCurrentScreen={setCurrentScreen} />;
       default:
         return <StartScreen setCurrentScreen={setCurrentScreen} />;
     }

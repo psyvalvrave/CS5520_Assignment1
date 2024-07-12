@@ -1,3 +1,4 @@
+//This is a helper file so dev does not need to move color all around 
 const colors = {
     primary: '#4CAF50',
     secondary: '#007AFF',      
@@ -20,7 +21,6 @@ const colors = {
         restart: '#a61c3a',
     },
     transparent: 'rgba(0, 0, 0, 0.4)',
-  };
-  
-  export default colors;
-  
+};
+
+export default colors;

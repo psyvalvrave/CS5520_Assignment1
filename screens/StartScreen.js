@@ -18,7 +18,7 @@ const StartScreen = ({ setCurrentScreen }) => {
   const [errors, setErrors] = useState({ name: '', email: '' });
   const [confirmVisible, setConfirmVisible] = useState(false);
 
-
+  //valid check, these two checks is written by gpt tool 
   const validateName = (name) => {
     if (!name.match(/^[a-zA-Z ]+$/)) {
       return 'Name must be non-numeric and contain only letters.';
@@ -35,6 +35,7 @@ const StartScreen = ({ setCurrentScreen }) => {
     return '';
   };
 
+  //after hit return, check the input is valid or not 
   const handleBlurName = () => {
     const error = validateName(name);
     setErrors(prev => ({ ...prev, name: error }));
@@ -56,6 +57,7 @@ const StartScreen = ({ setCurrentScreen }) => {
     }
   };
 
+  //clear everything 
   const handleReset = () => {
     setName('');
     setEmail('');
@@ -97,7 +99,7 @@ const StartScreen = ({ setCurrentScreen }) => {
             <CustomButton title="Start" onPress={handleStart} disabled={!checkboxSelected || errors.name || errors.email} color={colors.button.start} />
         </View>
       </Card>
-      <ConfirmScreen
+      <ConfirmScreen 
         visible={confirmVisible}
         name={name}
         email={email}
@@ -105,7 +107,7 @@ const StartScreen = ({ setCurrentScreen }) => {
         onConfirm={() => {
           setConfirmVisible(false);
           setCurrentScreen('Game'); 
-        }}
+        }} //The confirm screen is built with modal, so parent start screen should pass all parameters to the child ConfirmScreen here
       />
     </Back>
   );

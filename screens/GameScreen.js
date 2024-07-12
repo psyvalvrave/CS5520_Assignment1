@@ -10,16 +10,17 @@ import CustomTextError from '../components/CustomTextError';
 import colors from '../config/Color';
 
 const GameScreen = ({ setCurrentScreen }) => {
-    const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1);
+    const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100) + 1); //this randomNumber can be directly use in render later to test how to reach successful page
     const [guess, setGuess] = useState('');
     const [attempts, setAttempts] = useState(4);
     const [timer, setTimer] = useState(60);
     const [hintUsed, setHintUsed] = useState(false);
     const [hint, setHint] = useState("")
-    const [gameState, setGameState] = useState('playing');
+    const [gameState, setGameState] = useState('playing'); //'playing', 'gameOver', 'gameWon' to show different page
     const [gamePlaying, setGamePlaying] = useState(true);
     const [gameOverReason, setGameOverReason] = useState('');
 
+    //timer part, count down to 0
     useEffect(() => {
     const interval = setInterval(() => {
         setTimer(prevTimer => prevTimer - 1);
@@ -28,6 +29,7 @@ const GameScreen = ({ setCurrentScreen }) => {
         return () => clearInterval(interval);
     }, []);
 
+    //game over with timer 
     useEffect(() => {
     if (timer === 0) {
             setGameOverReason('timeUp');
@@ -38,9 +40,10 @@ const GameScreen = ({ setCurrentScreen }) => {
         }
     }, [timer, attempts]);
 
+    //different submissions to different results 
     const handleGuessSubmission = () => {
         const numGuess = parseInt(guess);
-        if (isNaN(numGuess)) {
+        if (isNaN(numGuess)||numGuess>100||numGuess<0) {
             Alert.alert('Invalid Input', 'Please enter a valid number.');
             return;
         }
@@ -59,7 +62,7 @@ const GameScreen = ({ setCurrentScreen }) => {
             setGameState('gameWon');
         }
     };
-
+    //one-time simple hint
     const handleUseHint = () => {
     if (!hintUsed) {
         const hintMessage = `The number is ${randomNumber > 50 ? 'greater' : 'equal to or less'} than 50.`;
@@ -70,17 +73,19 @@ const GameScreen = ({ setCurrentScreen }) => {
     }
     };
 
+    //go back to the startScreen 
     const handleRestart = () => {
     setCurrentScreen('Start');
     };
 
+    //conditional rendering, base on different game state will show different page  
     const renderGameContent = () => {
         if (gameState === 'playing') {
             return (
                 <Card style={styles.card}>
                     {gamePlaying && (
                     <View>
-                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100 test answer is:{randomNumber}</CustomTextLabel>
+                        <CustomTextLabel style={styles.guessPrompt}>Guess A Number Between 1 & 100</CustomTextLabel>
                         <CustomInput
                             style={styles.input} 
                             value={guess}
@@ -122,7 +127,7 @@ const GameScreen = ({ setCurrentScreen }) => {
                 default:
                     reasonText = '';
                     break;
-            }
+            }//show different text base on different ways to lose the game. For user give up part, I did not add any text because there isn't text appeared on the demo. Add extra default just in case crashed. 
         
             return (
                 <Card style={styles.card}>
